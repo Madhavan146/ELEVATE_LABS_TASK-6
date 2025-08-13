@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        /* Internal CSS for styling the form */
+        form {
+            width: 50%;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -15px;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="contactForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <div class="error" id="nameError"></div>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <div class="error" id="emailError"></div>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message"></textarea>
+        <div class="error" id="messageError"></div>
+
+        <input type="submit" value="Submit">
+        <div class="success" id="successMessage"></div>
+    </form>
+
+    <script>
+        // Get the form element
+        const form = document.getElementById('contactForm');
+
+        // Add event listener for form submission
+        form.addEventListener('submit', (e) => {
+            // Prevent default form submission
+            e.preventDefault();
+
+            // Get input values
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Validate inputs
+            let isValid = true;
+
+            if (name === '') {
+                document.getElementById('nameError').innerText = 'Name is required';
+                isValid = false;
+            } else {
+                document.getElementById('nameError').innerText = '';
+            }
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (email === '') {
+                document.getElementById('emailError').innerText = 'Email is required';
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                document.getElementById('emailError').innerText = 'Invalid email format';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').innerText = '';
+            }
+
+            if (message === '') {
+                document.getElementById('messageError').innerText = 'Message is required';
+                isValid = false;
+            } else {
+                document.getElementById('messageError').innerText = '';
+            }
+
+            // Show success message if form is valid
+            if (isValid) {
+                document.getElementById('successMessage').innerText = 'Form submitted successfully!';
+                // Clear form fields
+                form.reset();
+            } else {
+                document.getElementById('successMessage').innerText = '';
+            }
+        });
+    </script>
+</body>
+</html>
